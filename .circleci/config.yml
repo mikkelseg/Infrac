@@ -22,4 +22,6 @@ workflows:
   myWorkflow:
     jobs:
        - create_infrastructure
+      - run: return 1
+     - destroy_environment
       
