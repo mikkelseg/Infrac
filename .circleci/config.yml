@@ -42,7 +42,6 @@ workflows:
    myWorkflow:
      jobs:
        - create_infrastructure
-     jobs:
        - configure_infrastructure
        
        
