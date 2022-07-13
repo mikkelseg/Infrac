@@ -18,14 +18,14 @@ jobs:
               --template-file template.yml \
               --stack-name myStack123
    # Exercise: Config and Deployment
- configure_infrastructure: 
+  configure_infrastructure: 
    docker: python:3.7-alpine3.11
      - image: 
    steps:
      - checkout
      - add_ssh_keys:
              # You can get this ID in the section where you registered the SSH Key
-             fingerprints: ["10:fd:c5:cb:a5:97:b3:5b:5d:bf:b1:11:00:81:09:76"] 
+             fingerprints: ['10:fd:c5:cb:a5:97:b3:5b:5d:bf:b1:11:00:81:09:76'] 
      - run:
         name: Install Ansible
         command: |
