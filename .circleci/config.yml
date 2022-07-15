@@ -37,10 +37,10 @@ jobs:
           # Your command
      #     ansible-playbook -i inventory.txt main.yml 
      
-     smoke_test:
-     docker:
+    smoke_test:
+    docker:
       - image: alpine:latest
-     steps:
+    steps:
        - run: apk add --update curl
        - run:
           name: smoke test
