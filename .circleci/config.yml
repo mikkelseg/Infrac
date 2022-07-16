@@ -41,6 +41,7 @@ jobs:
               --template-file template.yml \
               --stack-name myStack123 \
               --region us-east-1
+      - destroy_environment     
       
 
   # Exercise: Smoke Testing
