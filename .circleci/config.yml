@@ -19,7 +19,7 @@ commands:
           # ${CIRCLE_WORKFLOW_ID:0:5} takes the first 5 chars of the variable CIRCLE_CI_WORKFLOW_ID 
           when: on_fail
           command: |
-            aws cloudformation delete-stack --stack-name myStack12345
+            aws cloudformation delete-stack --stack-name myStack12
           
 jobs:
   # Exercise: Creating a Simple Workflow
@@ -30,7 +30,7 @@ jobs:
  
   # Exercise: Infrastructure Creation
   # Exercise - Rollback
-  create_infrastructure: 
+   create_infrastructure: 
     docker:
       - image: amazon/aws-cli
     steps:
@@ -40,14 +40,23 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file template.yml \
-              --stack-name myStack12345 \
+              --stack-name myStack12 \
               --region us-east-1
       # Fail the job intentionally to simulate an error.
       # Uncomment the line below if you want to fail the current step
       # - run: return 1
       - destroy_environment
 
-
+  # Exercise: Smoke Testing
+  smoke_test:
+   docker:
+     - image: alpine:latest
+   steps:
+     - run:
+         name: Test job
+       # Fail the job intentionally to simulate an error.
+         command:  return 1
+    - destroy_environment  
  
   
   
@@ -57,4 +66,5 @@ workflows:
     # Run the welcome/run job in its own container
     jobs:
       - create_infrastructure
+      - smoke_test
       
