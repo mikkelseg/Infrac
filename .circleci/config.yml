@@ -9,6 +9,7 @@ orbs:
 # Orchestrate or schedule a set of jobs
 
 commands:
+
   # Exercise - Rollback
   destroy_environment:
     steps:
@@ -18,15 +19,15 @@ commands:
           # ${CIRCLE_WORKFLOW_ID:0:5} takes the first 5 chars of the variable CIRCLE_CI_WORKFLOW_ID 
           when: on_fail
           command: |
-            aws cloudformation delete-stack --stack-name myStack123
+            aws cloudformation delete-stack --stack-name myStack1234
           
-
-
 jobs:
   # Exercise: Creating a Simple Workflow
   # Exercise: Environment Variables
   # Exercise: Reusable Job Code 
-  # Exercise: Sharing Files (Job names may have changed)
+  
+  
+ 
   # Exercise: Infrastructure Creation
   # Exercise - Rollback
   create_infrastructure: 
@@ -39,10 +40,13 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file template.yml \
-              --stack-name myStack123 \
+              --stack-name myStack1234 \
               --region us-east-1
-      - destroy_environment     
-      
+      # Fail the job intentionally to simulate an error.
+      # Uncomment the line below if you want to fail the current step
+      # - run: return 1
+      - destroy_environment
+
 
   # Exercise: Smoke Testing
   smoke_test:
@@ -51,11 +55,11 @@ jobs:
     steps:
       - run: apk add --update curl
       - run:
-          name: test job
+          name: smoke test
           command: return 1
-           
+      - destroy_environment      
   
-
+  
 workflows:
   # Name the workflow "welcome"
   my_workflow:
