@@ -9,8 +9,6 @@ orbs:
 # Orchestrate or schedule a set of jobs
 
 commands:
-  # Exercise: Reusable Job Code
-
   # Exercise - Rollback
   destroy_environment:
     steps:
@@ -20,13 +18,13 @@ commands:
           # ${CIRCLE_WORKFLOW_ID:0:5} takes the first 5 chars of the variable CIRCLE_CI_WORKFLOW_ID 
           when: on_fail
           command: |
-            aws cloudformation delete-stack --stack-name myStack12
+            aws cloudformation delete-stack --stack-name myStack12345
           
 jobs:
   # Exercise: Creating a Simple Workflow
   # Exercise: Environment Variables
   # Exercise: Reusable Job Code 
- 
+  
   # Exercise: Infrastructure Creation
   # Exercise - Rollback
   create_infrastructure: 
@@ -39,12 +37,12 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file template.yml \
-              --stack-name myStack12 \
+              --stack-name myStack12345 \
               --region us-east-1
       # Fail the job intentionally to simulate an error.
       # Uncomment the line below if you want to fail the current step
-               - run: return 1
-               - destroy_environment
+      # - run: return 1
+      - destroy_environment
 
   # Exercise: Smoke Testing
   smoke_test:
@@ -73,6 +71,11 @@ jobs:
   # Job 1
   # Executes the bucket.yml - Deploy an S3 bucket, and interface with that bucket to synchronize the files between local and the bucket.
   # Note that the `--parameter-overrides` let you specify a value that override parameter value in the bucket.yml template file.
+  
+  
+  # Exercise: Promote to Production - Job 3
+  # Executes the cloudfront.yml template that will modify the existing CloudFront Distribution, change its target from the old bucket to the new bucket - `mybucket-${CIRCLE_WORKFLOW_ID:0:7}`. 
+  # Notice here we use the stack name `production-distro` which is the same name we used while deploying to the S3 bucket manually.
   
 
 
